@@ -87,7 +87,7 @@ def update_bot():
 
     try:
         # دانلود آخرین نسخه از گیت‌هاب (یا هر سورس دیگر)
-        repo_url = "https://github.com/نام-کاربری-گیتهاب/مخزن-ربات.git"
+        repo_url = "https://github.com/keyvan3149/trading-bot.git"  # نام مخزن خود را اینجا وارد کنید
         subprocess.run(["git", "pull", repo_url], check=True)
 
         send_telegram_message("✅ آپدیت انجام شد! در حال ری‌استارت...")
@@ -131,5 +131,21 @@ def trading_bot():
             send_telegram_message(f"❌ Error in bot execution: {e}")
             fix_and_restart()
 
+# تابعی برای انجام خودکار به‌روزرسانی ربات
+def setup_git():
+    print("مقداردهی اولیه گیت...")
+    os.system('git init')
+    os.system('git add .')
+    os.system('git commit -m "first commit"')
+
+    print("اتصال به مخزن آنلاین...")
+    remote_url = "https://github.com/keyvan3149/trading-bot.git"  # نام مخزن را اینجا وارد کنید
+    os.system(f'git remote add origin {remote_url}')
+
+    print("ارسال تغییرات به GitHub...")
+    os.system('git branch -M main')  # شاخه اصلی را به 'main' تغییر می‌دهد
+    os.system('git push -u origin main')
+
 if __name__ == "__main__":
+    setup_git()  # فقط در صورتی که می‌خواهید ابتدا گیت رو راه‌اندازی کنید
     trading_bot()
